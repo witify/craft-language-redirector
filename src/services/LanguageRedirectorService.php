@@ -37,6 +37,13 @@ class LanguageRedirectorService extends Component
     // Public Methods
     // =========================================================================
 
+    public function __construct($config = [])
+    {
+        $this->_setQueryParameters();
+
+        parent::__construct($config);
+    }
+
     /**
      * Check if a redirection makes sense in the current context
      *
@@ -71,7 +78,7 @@ class LanguageRedirectorService extends Component
             $canRedirect = false;
         }
 
-        if (Craft::$app->user->checkPermission('accessCp') && LanguageRedirector::getInstance()->getSettings()->redirectUsersWithCpAccess == false) {
+        if (null === $this->_getLanguageFromQueryParameter() && Craft::$app->user->checkPermission('accessCp') && LanguageRedirector::getInstance()->getSettings()->redirectUsersWithCpAccess == false) {
             $canRedirect = false;
         }
 
@@ -103,7 +110,6 @@ class LanguageRedirectorService extends Component
             return false;
         }
 
-        $this->_setQueryParameters();
         $redirectUrl = $this->getTargetUrl();
 
         if (null === $redirectUrl) {
