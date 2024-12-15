@@ -487,7 +487,7 @@ class LanguageRedirectorService extends Component
      */
     protected function _setQueryParameters()
     {
-        if (!Craft::$app->getRequest()->getIsSiteRequest()) {
+        if (! Craft::$app->getRequest()->getIsWebRequest()) {
             return;
         }
 
